@@ -94,4 +94,46 @@
 
         `(d deck)` means this is a receiver,  which means, cross all the variable whose type is deck will have the access to this function.  To call it, use `cards.print()` 
 
-​	
+6. `Slice` 
+
+    zero indexed data structure in golang
+
+    1. Sub slice
+
+        ```go
+        fruit := []string {"Apple", "Banana", "Grape", "Orange"}
+        fruit[0:2] // return ["Apple", "Banana"]
+        // fruits[startIndexIncluding: endIndexNotIncluding]
+        fruit[:2] // start index can be ignored
+        fruit[2:] // end index can be also ignored
+        ```
+
+    2. return type of a function
+
+        ```go
+        func deal(d deck, handSize int) (deck, deck) {
+            return d[:handSize], d[handSize:]
+        }
+        ```
+
+        Golang allows to return more than one value from a function, in the function name declaration, only thing we need to do is use `()` to put all the data type we want to return inside. 
+
+7. `Byte Slice`
+
+    byte slice is the slice that stores ascii number for each character of a string. It is a more computer compilable way for string. 
+
+    ```go
+    "Hi there!" -> String
+    [72, 105, 32, 116, 104, 101, 114, 101, 33] -> []byte slice of ascii code.
+    ```
+
+    1. How to do type convertion
+
+        ```go
+        greeting := "Hi there!"
+        fmt.Println([]byte(greeting))
+        ```
+
+    2. When to use receiver or parameter
+
+        
