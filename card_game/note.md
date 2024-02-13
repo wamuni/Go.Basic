@@ -71,3 +71,27 @@
         `card`: the content of the element
 
         `range`: `i` and `card` are initialized everytime it starts iterating, the previous one will be  dropped after iteration.
+
+5. `type` Syntax
+
+    1. ```go
+        type deck []string
+        ```
+
+        This is kind like alias, by using type to declare a deck, basically will associate all function from `[]string` to `deck` therefore `deck` become a new data type that we can use within the package.
+
+        > For some unknown reason, VS Code is give error when using deck,  but it runnable.
+
+    2. Why we need this type: we can add more addtional function associated with this type specifically. So we can add some customised function with existing type
+
+        ```go
+        func (d deck) print() {
+            for i, card := range d {
+                fmt.Println(i, card)
+            }
+        }
+        ```
+
+        `(d deck)` means this is a receiver,  which means, cross all the variable whose type is deck will have the access to this function.  To call it, use `cards.print()` 
+
+​	
