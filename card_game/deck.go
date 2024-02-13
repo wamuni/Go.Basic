@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // create a new type of deck
@@ -29,7 +31,15 @@ func (d deck) print() {
 }
 
 func (d deck) shuffle() {
+	// create a seed first
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
 
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		// fansy one line swap function, syntax sugar in golang
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
 
 func deal(d deck, handSize int) (deck, deck) {
@@ -40,9 +50,15 @@ func (d deck) saveToFile(filename string) error {
 	return os.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
-func (d deck) newDeckFromFile(filename string) (deck, error) {
-	value, err := os.ReadFile(filename)
-	return deck(strings.Split(string(value), ",")), err
+func newDeckFromFile(filename string) deck {
+	bs, err := os.ReadFile(filename)
+	if err != nil {
+		//Option 1: log the err and returna  call to a newDeck()
+		//Option 2: log the err and entirely quit the program
+		fmt.Println("Error: ", err)
+		os.Exit(1) // 0 indicates non error here. otherwise there is an error
+	}
+	return deck(strings.Split(string(bs), ","))
 }
 
 func (d deck) toString() string {
