@@ -5,7 +5,7 @@ import "fmt"
 type Person struct {
 	firstName string
 	lastName  string
-	contact   contactInfo
+	contact   contactInfo // field name can be ignored
 }
 
 type contactInfo struct {
@@ -24,6 +24,7 @@ func main() {
 
 	fmt.Println(alex)
 	fmt.Printf("%+v\n", alex) // %+v print all different field name
+	alex.print()
 
 	jim := Person{
 		firstName: "Jim",
@@ -34,6 +35,23 @@ func main() {
 		},
 	}
 
-	fmt.Printf("%+v", jim)
+	jim.print()
 
+	jimPointer := &jim
+	jimPointer.udpateName("Jimmy")
+	jim.print()
+	jim.udpateName("Eddie")
+	jim.print()
+
+}
+
+/*
+* When we attampt
+ */
+func (p Person) print() {
+	fmt.Printf("%+v\n", p)
+}
+
+func (p *Person) udpateName(newFirstName string) {
+	(*p).firstName = newFirstName
 }
