@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Person struct {
 	firstName string
@@ -37,17 +39,20 @@ func main() {
 
 	jim.print()
 
-	jimPointer := &jim
-	jimPointer.udpateName("Jimmy")
-	jim.print()
 	jim.udpateName("Eddie")
 	jim.print()
 
+	// Because slice is reference type, so we can pass it into function directly
+	// struct is value type data struct, we have to use pointer
+	mySlice := []string{"hi", "there", "how", "are", "you"}
+	updateSlice(mySlice)
+	fmt.Println(mySlice)
 }
 
-/*
-* When we attampt
- */
+func updateSlice(s []string) {
+	s[0] = "Bye"
+}
+
 func (p Person) print() {
 	fmt.Printf("%+v\n", p)
 }
