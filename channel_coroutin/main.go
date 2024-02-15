@@ -14,17 +14,27 @@ func main() {
 		"http://amazon.com",
 	}
 
+	// how to create channel
+	c := make(chan string)
+
 	for _, link := range links {
-		checkLink(link)
+		go checkLink(link, c)
+	}
+
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
 	}
 }
 
-func checkLink(url string) {
+// when use channel in parameter, we have to specify data type as well
+func checkLink(url string, c chan string) {
 	_, err := http.Get(url)
 	if err != nil {
-		fmt.Println(url, "might be down!")
+		fmt.Println(url, "might be down")
+		c <- "No, might be down!"
 		return
 	}
 
 	fmt.Println(url, "is up!")
+	c <- "Yep is up!"
 }
