@@ -20,5 +20,8 @@ func main() {
 	colors3["white"] = "#ffffff"
 	fmt.Println(colors3)
 
+	delete(colors3, "white")
+	fmt.Println(colors3)
+
 	//TODO: Is there any difference between different syntax
 }
